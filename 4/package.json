@@ -4,6 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
+    "format": "prettier --write .",
+    "check": "prettier --check .",
     "build": "webpack",
     "start": "webpack server --open"
   },
@@ -13,6 +15,7 @@
   },
   "private": true,
   "devDependencies": {
+    "prettier": "^3.3.3",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.4",
     "webpack": "^5.94.0",
