@@ -15,10 +15,11 @@ class App {
     this.displayUsers();
   }
 
-  
   addBook = () => {
     const titleInput = document.getElementById("bookTitle") as HTMLInputElement;
-    const authorInput = document.getElementById("bookAuthor") as HTMLInputElement;
+    const authorInput = document.getElementById(
+      "bookAuthor",
+    ) as HTMLInputElement;
     const yearInput = document.getElementById("bookYear") as HTMLInputElement;
 
     const title = titleInput.value;
@@ -34,7 +35,7 @@ class App {
     const success = this.bookService.addBook(title, author, year);
     if (success) {
       this.clearValidationErrors();
-      Modal.showSuccessModal("Книгу '"+title+"' успішно додано!");
+      Modal.showSuccessModal("Книгу '" + title + "' успішно додано!");
       titleInput.value = "";
       authorInput.value = "";
       yearInput.value = "";
@@ -60,12 +61,12 @@ class App {
     const success = this.userService.addUser(name, email);
     if (success) {
       this.clearValidationErrors();
-      Modal.showSuccessModal("Користувача "+name+" успішно додано!");
+      Modal.showSuccessModal("Користувача " + name + " успішно додано!");
       nameInput.value = "";
       emailInput.value = "";
       this.displayUsers();
     } else {
-      Modal.showSuccessModal("Не вдалося додати користувача "+name+".");
+      Modal.showSuccessModal("Не вдалося додати користувача " + name + ".");
     }
   };
 
@@ -81,7 +82,6 @@ class App {
       ?.addEventListener("click", this.handleBookAction);
   };
 
-  
   displayBooks = () => {
     const booksListElement = document.getElementById("booksList");
 
@@ -112,7 +112,7 @@ class App {
         .map(
           (user) =>
             `<li class="d-flex justify-content-between align-items-center mb-2">${user.name} (${user.email}) - ID: ${user.id} - Позичені книги: ${user.borrowedBooks.length}
-          </li>`
+          </li>`,
         )
         .join("");
     }
@@ -129,7 +129,7 @@ class App {
           this.showBorrowBookModal(bookId);
         } else if (action === "return") {
           this.returnBook(bookId);
-        }else if (action === "delete") {
+        } else if (action === "delete") {
           this.deleteBook(bookId);
         }
       }
@@ -138,7 +138,7 @@ class App {
 
   showBorrowBookModal = (bookId: string) => {
     Modal.showBorrowBookModal(bookId, (userId: string) =>
-      this.borrowBook(bookId, userId)
+      this.borrowBook(bookId, userId),
     );
   };
 
@@ -167,7 +167,7 @@ class App {
       } else {
         Modal.showErrorModal(
           "Помилка позичення книги",
-          "Не вдалося позичити книгу."
+          "Не вдалося позичити книгу.",
         );
       }
       this.updateBookButtonState(bookId, false);
@@ -175,7 +175,9 @@ class App {
   };
 
   updateBookButtonState = (bookId: string, isBorrowed: boolean) => {
-    const bookElement = document.querySelector(`[data-book-id="${bookId}"]`) as HTMLButtonElement;
+    const bookElement = document.querySelector(
+      `[data-book-id="${bookId}"]`,
+    ) as HTMLButtonElement;
     if (bookElement) {
       if (isBorrowed) {
         bookElement.textContent = "Повернути";
@@ -205,21 +207,21 @@ class App {
       console.error("Error returning book:", error);
       Modal.showErrorModal(
         "Помилка повернення книги",
-        "Не вдалося повернути книгу."
+        "Не вдалося повернути книгу.",
       );
     }
   };
 
   private clearValidationErrors() {
     const errorElements = document.querySelectorAll(
-      ".is-invalid, .border-danger"
+      ".is-invalid, .border-danger",
     );
     errorElements.forEach((element) => {
       element.classList.remove("is-invalid", "border-danger");
     });
 
     const errorMessages = document.querySelectorAll(
-      ".invalid-feedback, .text-danger"
+      ".invalid-feedback, .text-danger",
     );
     errorMessages.forEach((element) => {
       element.remove();
