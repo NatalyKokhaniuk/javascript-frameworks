@@ -90,7 +90,7 @@ export class UserService {
   }
 
   getUserByBookId(bookId: string): IUser | undefined {
-    let users: IUser[] = this.getAllUsers();
+    const users: IUser[] = this.getAllUsers();
     for (let i = 0; i < users.length; ++i) {
       if (users[i].borrowedBooks.includes(bookId)) return users[i];
     }
